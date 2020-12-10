@@ -48,7 +48,7 @@ def logOut():
           '* Savings Balance is:', "${:,.2f}".format(
               float(r.get(str(name) + '_savings'))))
     time.sleep(1)
-    print('* Thank You for banking with WAIO Bank *,', str(name) + '.')
+    print('* Thank You for banking with WAIO Bank *,', str(name).title() + '.')
     time.sleep(1)
     print("{:*^20}".format('ＷＡＩＯ Ｂａｎｋ ｖ１.０'))
     exit()
@@ -316,12 +316,13 @@ def welcome():
     pin = 0
     pin_Error = 0
     if r.exists(str(name) + '_pin'):
+        print('*', str(name).title(),'is registered, if this is you...')
         while pin != r.get(str(name) + '_pin'):
-            pin = input('* Enter Pin to continue: ')
+            pin = input('* Please Enter Your Pin to continue: ')
             pin_Error += 1
             if pin == r.get(str(name) + '_pin'):
                 r.incr(str(name) + '_logins')
-                print('* Pin Accepted, Welcome back', str(name))
+                print('* Pin Accepted, Welcome back', str(name).title())
                 time.sleep(2)
                 menu()
             else:
@@ -345,7 +346,7 @@ def welcome():
             elif decision == 'Y' or decision == 'y' or decision == 'yes' or decision == 'Yes':
                 clear()
                 print('* Good choice and welcome to WAIO Bank,',
-                      str(str(name)) + '!')
+                      str(name).title() + '!')
                 decide = True
             else:
                 print(
@@ -397,7 +398,7 @@ def welcome():
         menu()
 
 
-def start():
+def main():
     host_message = 'cmVkaXMtMTQ3MjYuYzg0LnVzLWVhc3QtMS0yLmVjMi5jbG91ZC5yZWRpc2xhYnMuY29t'
     host_bytes = host_message.encode('ascii')
     hostm_bytes = base64.b64decode(host_bytes)
@@ -427,17 +428,24 @@ def intialise():
             decode_responses=True)
         global name
         print("{:*^20}".format('ＷＡＩＯ Ｂａｎｋ ｖ１.０'))
-        name = input('* Enter Username to Log In: ')
-        global login_Start
-        login_Start = time.time()
-        clear()
-        welcome()
+        while True:
+            name = input('* Enter Username to Log In: ')
+            if name and name.isalpha():
+                name = name.lower()
+                global login_Start
+                login_Start = time.time()
+                clear()
+                welcome()
+            elif name and name.isdigit():
+                print('* Please use Alphabet characters only')
+            else:
+                print('* Only Alphabet Usernames are allowed.')           
     except Exception as e:
-        print(e)
+        print(e)    
 
 
 if __name__ == '__main__':
-    start()
+    main()
 else:
     print('Module running')
     #Run as module
