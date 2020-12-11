@@ -15,3 +15,8 @@ Future Features:
 • Decentralised BlockChain implementation
 • Public viewable ledger of transactions
 • Credit and debit facilities with other account holders and merchants
+
+Immediate TODO's:
+Input catches and exceptions
+Piping connected Redis users
+Terminate Pipes after period of time.

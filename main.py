@@ -1,10 +1,10 @@
 import redis
 import time
 from random import randint
-from datetime import datetime, date, timedelta
-from clear_screen import clear
 import base64
-import os
+from datetime import datetime, date
+from clear_screen import clear
+
 
 
 # WIP
@@ -19,14 +19,14 @@ def checkDuplicateAccount():
         r.mset({gather_Email: time.time(), gather_Mobile: time.time()})
         print('* Duplicate Accounts are not Permitted, Goodbye!')
         time.sleep(1)
-        exit()
+        intialise()
     else:
         pass
     if r.exists(gather_Email) or r.exists(gather_Mobile):
         r.set(str(name), time.time())
         print('* Duplicate Accounts are not Permitted, Goodbye!')
         time.sleep(1)
-        exit()
+        intialise()
     else:
         r.mset({gather_Email: time.time(), gather_Mobile: time.time()})
 
@@ -50,8 +50,12 @@ def logOut():
     time.sleep(1)
     print('* Thank You for banking with WAIO Bank *,', str(name).title() + '.')
     time.sleep(1)
+    print()
     print("{:*^20}".format('ＷＡＩＯ Ｂａｎｋ ｖ１.０'))
-    exit()
+    print()
+    input("* Press Enter to log out...")
+    clear()
+    intialise()
 
 
 # WIP
@@ -74,7 +78,9 @@ def run_Delete():
     print('* Your session lasted:', round(time.time() - login_Start),
           'Seconds.')
     time.sleep(1)
-    exit()
+    input("* Press Enter to log out...")
+    clear()
+    intialise()
 
 
 def menu():
@@ -293,24 +299,28 @@ def welcome():
     print("-----------------------------------------------")
     print("********** 𝚆𝚎𝚕𝚌𝚘𝚖𝚎 𝚝𝚘 𝚆𝙰𝙸𝙾 𝙱𝚊𝚗𝚔 ********** ")
     print("-----------------------------------------------")
+    print()
     code = randint(1, 10)
     code1 = randint(1, 10)
     code_ans = code + code1
     code_Error = 0
     code_Check = 0
-    while code_ans != code_Check:
+    while code_ans != code_Check:   
         print('* Security Code is:', code, '+', code1, '= ?')
         code_Check = int(
             input('* Calculate Security Code Correctly to continue: '))
         code_Error += 1
         if code_Check == code_ans:
             print('* Security Code Correctly Calculated.')
+            time.sleep(1)
+            clear()
         else:
             if code_Error == 3:
                 print('* Incorrect Security Code, Goodbye!')
                 print('* Your session lasted:',
-                      round(time.time() - login_Start), 'Seconds.')
-                exit()
+                round(time.time() - login_Start), 'Seconds.')
+                intialise()
+                clear()     
             print('* Incorrect Security Code, You have', 3 - code_Error,
                   'attempts left.')
     pin = 0
@@ -329,8 +339,10 @@ def welcome():
                 if pin_Error == 3:
                     print('* Incorrect Pin Code, Goodbye!')
                     print('* Your session lasted:',
-                          round(time.time() - login_Start), 'Seconds.')
-                    exit()
+                    round(time.time() - login_Start), 'Seconds.')
+                    time.sleep(5)
+                    clear()
+                    intialise()     
                 print('* Incorrect Pin Code, You have', 3 - pin_Error,
                       'attempts left.')
     else:
@@ -342,7 +354,9 @@ def welcome():
             decision = input('* Y/y/Yes/yes or N/n/No/no: ')
             if decision == 'N' or decision == 'n' or decision == 'no' or decision == 'No':
                 print('* No problem, Goodbye!')
-                exit()
+                input("* Press Enter to log out...")
+                clear()
+                intialise()
             elif decision == 'Y' or decision == 'y' or decision == 'yes' or decision == 'Yes':
                 clear()
                 print('* Good choice and welcome to WAIO Bank,',
@@ -428,6 +442,7 @@ def intialise():
             decode_responses=True)
         global name
         print("{:*^20}".format('ＷＡＩＯ Ｂａｎｋ ｖ１.０'))
+        print()
         while True:
             name = input('* Enter Username to Log In: ')
             if name and name.isalpha():
