@@ -11,7 +11,8 @@ Current Features:
 • Savings system
 
 Future Features:
-• Daily compound interest
+• Secure error catches and regex matches for mobile/email etc
+• Daily compound interest or Interest between last batch run / 86400
 • Decentralised BlockChain implementation
 • Public viewable ledger of transactions
 • Credit and debit facilities with other account holders and merchants
